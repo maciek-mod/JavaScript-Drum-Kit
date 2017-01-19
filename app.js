@@ -21,4 +21,4 @@ function Drumkit() {
 
 }
 
-document.addEventListener('DOMContentLoaded', Drumkit())
+document.addEventListener('DOMContentLoaded', Drumkit());
