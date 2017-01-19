@@ -1,24 +1,28 @@
-function Drumkit() {
+class Drumkit {
+	constructor() {
 
-    function playSound(e) {
-        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-        const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-        if (!audio) return;
+		this.playSound = this.playSound.bind(this);
 
-        key.classList.add('playing');
-        audio.currentTime = 0;
-        audio.play();
-    }
+    document.body.addEventListener('keydown', this.playSound);
+		document.body.addEventListener('transitionend', this.transitionEnd);
+	}
 
-    function removeTransition(e) {
-        e.target.classList.remove('playing');
-    }
+	playSound(e) {
+		const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
 
-    const keys = Array.from(document.querySelectorAll('.key'));
-    keys.forEach(el => el.addEventListener('transitionend', removeTransition));
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+	}
 
-    window.addEventListener('keydown', playSound);
-
+	transitionEnd(e) {
+		if (e.target.classList.contains('key')) {
+			e.target.classList.remove('playing');
+		}
+	}
 }
 
-document.addEventListener('DOMContentLoaded', Drumkit());
+document.addEventListener('DOMContentLoaded', () => {
+	const drumkit = new Drumkit();
